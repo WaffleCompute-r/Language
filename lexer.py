@@ -21,7 +21,7 @@ def lex_str(line): #done
 
 def lex_id(line): #done
     # keywords
-    keys = ['print', 'while', 'if', 'elif', 'else']
+    keys = ['+','print', 'while', 'if', 'elif', 'else']
     # id is a name assigned by the user (variable name)
     id = ""
     # iterate through the line
@@ -56,5 +56,8 @@ def lex(line): #done
             count += consumed
         else:
             count += 1
+    
+        print("type: ", typ, "token: ", tok, "consumed: ", consumed)
+        
 code = input()
 lex(code)
