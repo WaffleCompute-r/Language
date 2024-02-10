@@ -1,3 +1,5 @@
+SYMBOL_CHARS = ['+', '|', '=']
+
 def lex_num(line): #done
     num = ""
     # iterate through the line
@@ -20,10 +22,9 @@ def lex_str(line): #done
     return 'str', string, len(string)
 
 def lex_sym(line):
-    symbol_chars = ['+', '|', '=']
     symbol = ""
     for c in line:
-        if c not in symbol_chars:
+        if c not in SYMBOL_CHARS:
             break
         symbol += c
 
@@ -64,9 +65,13 @@ def lex(line): #done
         elif lexeme.isalpha():
             typ, tok, consumed = lex_id(line[count:])
             count += consumed
-        else:
+        elif lexeme in SYMBOL_CHARS:
             typ, tok, consumed = lex_sym(line[count:])
             count += consumed
+        else:
+            # does this actually do anything
+            # it'll just print the stuff from the last time round
+            count += 1
     
         print("type: ", typ, "token: ", tok, "consumed: ", consumed)
         
