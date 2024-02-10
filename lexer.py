@@ -72,6 +72,7 @@ def lex(line): #done
             # does this actually do anything
             # it'll just print the stuff from the last time round
             count += 1
+            continue
     
         print("type: ", typ, "token: ", tok, "consumed: ", consumed)
         
