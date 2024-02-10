@@ -1,4 +1,4 @@
-SYMBOL_CHARS = ['+', '|', '=']
+SYMBOL_CHARS = ['+', '|', '=', '*5', '&', '(', ')']
 
 def lex_num(line): #done
     num = ""
@@ -74,7 +74,7 @@ def lex(line): #done
             count += 1
             continue
     
-        print("type: ", typ, "token: ", tok, "consumed: ", consumed)
+        print("type: ", typ, ", " "token: ", tok, ", " "consumed: ", consumed)
         
 code = input()
 lex(code)
