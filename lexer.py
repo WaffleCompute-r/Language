@@ -1,3 +1,5 @@
+SYMBOL_CHARS = ['+', '|', '=']
+
 def lex_num(line): #done
     num = ""
     # iterate through the line
@@ -19,15 +21,24 @@ def lex_str(line): #done
          string += c
     return 'str', string, len(string)
 
+def lex_sym(line):
+    symbol = ""
+    for c in line:
+        if c not in SYMBOL_CHARS:
+            break
+        symbol += c
+
+    return 'sym', symbol, len(symbol)
+
 def lex_id(line): #done
     # keywords
-    keys = ['+','print', 'while', 'if', 'elif', 'else']
+    keys = ['print', 'while', 'if', 'elif', 'else']
     # id is a name assigned by the user (variable name)
     id = ""
     # iterate through the line
     for c in line:
         # if the character is not a digit, letter, or underscore
-        if not (c.isdigit() and c.isalpha and c == "_"):
+        if not (c.isdigit() or c.isalpha() or c == "_"):
             break
         id += c
     if id in keys:
@@ -50,11 +61,16 @@ def lex(line): #done
             count += consumed
         elif lexeme == '"' or lexeme == "'":
             typ, tok, consumed = lex_str(line[count:])
-            lexeme_count += consumed
+            count += consumed
         elif lexeme.isalpha():
-            typ, tok, consumed = lex_str(line[count:])
+            typ, tok, consumed = lex_id(line[count:])
+            count += consumed
+        elif lexeme in SYMBOL_CHARS:
+            typ, tok, consumed = lex_sym(line[count:])
             count += consumed
         else:
+            # does this actually do anything
+            # it'll just print the stuff from the last time round
             count += 1
     
         print("type: ", typ, "token: ", tok, "consumed: ", consumed)
