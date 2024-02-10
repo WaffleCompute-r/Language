@@ -19,15 +19,25 @@ def lex_str(line): #done
          string += c
     return 'str', string, len(string)
 
+def lex_sym(line):
+    symbol_chars = ['+', '|', '=']
+    symbol = ""
+    for c in line:
+        if c not in symbol_chars:
+            break
+        symbol += c
+
+    return 'sym', symbol, len(symbol)
+
 def lex_id(line): #done
     # keywords
-    keys = ['+','print', 'while', 'if', 'elif', 'else']
+    keys = ['print', 'while', 'if', 'elif', 'else']
     # id is a name assigned by the user (variable name)
     id = ""
     # iterate through the line
     for c in line:
         # if the character is not a digit, letter, or underscore
-        if not (c.isdigit() and c.isalpha and c == "_"):
+        if not (c.isdigit() or c.isalpha() or c == "_"):
             break
         id += c
     if id in keys:
@@ -50,12 +60,13 @@ def lex(line): #done
             count += consumed
         elif lexeme == '"' or lexeme == "'":
             typ, tok, consumed = lex_str(line[count:])
-            lexeme_count += consumed
+            count += consumed
         elif lexeme.isalpha():
-            typ, tok, consumed = lex_str(line[count:])
+            typ, tok, consumed = lex_id(line[count:])
             count += consumed
         else:
-            count += 1
+            typ, tok, consumed = lex_sym(line[count:])
+            count += consumed
     
         print("type: ", typ, "token: ", tok, "consumed: ", consumed)
         
